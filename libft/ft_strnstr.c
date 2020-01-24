@@ -1,15 +1,24 @@
-/* strstr.c */
-#include <stdio.h>
-#include <string.h>
- 
-int main() {
-    printf("1: %s\n", strstr("Testando", "st"));
-    printf("2: %s\n", strstr("O rato roeu a roupa do rei de Roma", "ro"));
-    printf("3: %s\n", strstr("Nao vai achar", "vai nada"));
-    printf("4: %s\n", strstr("Vai achar no fim", "fim"));
-    printf("5: %s\n", strstr("Logo no inicio vai ser encontrado", "Logo no inicio"));
-    printf("6: %s\n", strstr("Nao vai procurar nada", ""));
-    printf("7: %s\n", strstr("", "Vai procurar em lugar nenhum"));
-    printf("8: %s\n", strstr("", ""));
-    return 0;
+
+char    *ft_strnstr(const char *s1, const char *s2, size_t len)
+{
+    int i;
+    int j;
+    char *ptr1;
+
+    ptr1 = (char *)s1;
+    i = 0;
+    while (ptr1[i] != '\0' && len--)
+    {
+        j = 0;
+        while (ptr1[i] == s2[j])
+        {
+            if (s2[j + 1] == '\0')
+                return (&ptr1[i - j]);
+            j++;
+            i++;
+            len--;
+        }
+        i++;
+    }
+    return (NULL);
 }
