@@ -5,30 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rtavares <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/25 14:27:17 by rtavares          #+#    #+#             */
-/*   Updated: 2020/01/25 14:27:21 by rtavares         ###   ########.fr       */
+/*   Created: 2020/01/25 17:51:41 by rtavares          #+#    #+#             */
+/*   Updated: 2020/01/25 17:51:50 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int     ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
-    int i;
-    int res;
+	int i;
+	int res;
 
-    i = 0;
-    res = 0;
-    if (str[i] == '-' || str[i] == '+')
-        i++;
-    while (str[i] >= 48 && str[i] <= 57)
-    {
-        res += str[i] - '0';
-        if (str[i + 1] >= 48 && str[i + 1] <= 57)
-            res *= 10;
-        i++;
-    }
-    if(str[0] == '-')
-        res *= -1;
-    return (res);
+	i = 0;
+	res = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		res += str[i] - '0';
+		if (str[i + 1] >= 48 && str[i + 1] <= 57)
+			res *= 10;
+		i++;
+	}
+	if (str[0] == '-')
+		res *= -1;
+	return (res);
 }
