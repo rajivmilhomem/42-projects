@@ -14,24 +14,26 @@
 
 char    *ft_strnstr(const char *s1, const char *s2, size_t len)
 {
-    int i;
-    int j;
-    char *ptr1;
+    unsigned int i;
+    unsigned int j;
+    unsigned int l;
 
-    ptr1 = (char *)s1;
     i = 0;
-    while (ptr1[i] != '\0' && len--)
+    j = 0;
+    l = len;
+    while (s1[i] != '\0' && l > 0)
     {
         j = 0;
-        while (ptr1[i] == s2[j])
+        while (s1[i] == s2[j] && l > 0 && s2[j] != '\0')
         {
-            if (s2[j + 1] == '\0')
-                return (&ptr1[i - j]);
-            j++;
             i++;
-            len--;
+            j++;
+            l--;
         }
+        if (s2[j] == '\0')
+            return((char *)&s1[i - j]);
         i++;
+        l--;
     }
     return (NULL);
 }
