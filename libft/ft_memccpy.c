@@ -14,24 +14,19 @@
 
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	unsigned char	*optr;
-	unsigned char	*dptr;
-	char			a;
-	int				i;
+	unsigned int		i;
+	unsigned char		*dest;
+	unsigned char		*orig;
 
-	optr = (unsigned char *)src;
-	dptr = (unsigned char *)dst;
-	a = (char)c;
 	i = 0;
-	while (n--)
+	dest = (unsigned char *)dst;
+	orig = (unsigned char *)src;
+	while (n > 0 && (char)c != *dest)
 	{
-		if (a != optr[i])
-		{
-			dptr[i] = optr[i];
-			i++;
-			if (a == optr[i])
-				dptr[i] = optr[i];
-		}
+		*dest = *orig;
+		dest++;
+		orig++;
+		n--;
 	}
 	return (dst);
 }
