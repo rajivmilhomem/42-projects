@@ -14,21 +14,26 @@
 
 int		ft_atoi(const char *str)
 {
-	int i;
-	int res;
+	int rs;
+	int sn;
 
-	i = 0;
-	res = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] >= 48 && str[i] <= 57)
+	rs = 0;
+	sn = 0;
+	while (*str == ' ' || *str == '\n' || *str == '\t' ||
+			*str == '\f' || *str == '\r' || *str == '\v')
+		str++;
+	if (*str == '-')
+		sn = 1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str >= 48 && *str <= 57)
 	{
-		res += str[i] - '0';
-		if (str[i + 1] >= 48 && str[i + 1] <= 57)
-			res *= 10;
-		i++;
+		rs += *str - '0';
+		str++;
+		if (*str >= 48 && *str <= 57)
+			rs *= 10;
 	}
-	if (str[0] == '-')
-		res *= -1;
-	return (res);
+	if (sn == 1)
+		rs *= -1;
+	return (rs);
 }

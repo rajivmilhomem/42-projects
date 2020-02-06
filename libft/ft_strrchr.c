@@ -6,15 +6,15 @@
 /*   By: rtavares <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 14:21:06 by rtavares          #+#    #+#             */
-/*   Updated: 2020/01/25 14:21:33 by rtavares         ###   ########.fr       */
+/*   Updated: 2020/02/05 21:12:47 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c) 
+char	*ft_strrchr(const char *s, int c)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen((char *)s);
 	while (len >= 0)
@@ -23,5 +23,5 @@ char	*ft_strrchr(const char *s, int c)
 			return ((char *)&s[len]);
 		len--;
 	}
-	return(NULL);
+	return (NULL);
 }
