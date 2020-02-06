@@ -22,7 +22,7 @@ AR		= ar -rc
 all:		$(NAME)
 
 $(NAME):	$(OBJ) $(HEAD)
-			$(CC) $(FLAGS) -I $(HEAD) -c $(SRCS)
+			$(CC) $(FLAGS) -c $(SRCS)
 			$(AR) $(NAME) $(OBJ)
 
 clean:
