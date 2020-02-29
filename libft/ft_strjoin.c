@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/15 17:32:46 by rtavares          #+#    #+#             */
-/*   Updated: 2020/02/29 14:12:07 by rtavares         ###   ########.fr       */
+/*   Created: 2020/02/29 12:54:04 by rtavares          #+#    #+#             */
+/*   Updated: 2020/02/29 14:07:19 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	cn;
-	size_t	sz;
 	char	*new;
+	size_t	tam;
 
-	cn = 0;
-	if (!s)
+	if (!s1 || !s2)
 		return (NULL);
-	if (ft_strlen(s) < start)
-		return (ft_strdup(""));
-	sz = ft_strlen(s + start);
-	if (sz < len)
-		len = sz;
-	if (!(new = (char *)malloc((len + 1) * sizeof(char))))
+	tam = ((ft_strlen(s1) + 1) + (ft_strlen(s2) + 1));
+	if (!(new = malloc(sizeof(char) * tam)))
 		return (NULL);
-	while (cn < len)
-	{
-		new[cn] = s[start + cn];
-		cn++;
-	}
-	new[cn] = '\0';
+	ft_strlcpy(new, s1, (ft_strlen(s1) + 1));
+	ft_strlcpy(&new[ft_strlen(s1)], s2, (ft_strlen(s2) + 1));
 	return (new);
 }

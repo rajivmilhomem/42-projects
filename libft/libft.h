@@ -6,7 +6,7 @@
 /*   By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 17:29:31 by rtavares          #+#    #+#             */
-/*   Updated: 2020/02/15 19:17:58 by rtavares         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:01:52 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
