@@ -6,7 +6,7 @@
 #    By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:52:16 by rtavares          #+#    #+#              #
-#    Updated: 2020/03/14 16:46:37 by rtavares         ###   ########.fr        #
+#    Updated: 2020/03/15 15:12:37 by rtavares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ SRCS	= ft_memset.c \
 			ft_substr.c \
 			ft_strjoin.c \
 			ft_strtrim.c \
-			ft_itoa.c
+			ft_itoa.c \
+			ft_strmapi.c
 HEAD	= libft.h
 OBJ		= $(SRCS:.c=.o)
 FLAGS	= -Wall -Wextra -Werror

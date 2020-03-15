@@ -31,7 +31,7 @@ static size_t	final(char const *s1, char const *set)
 	size_t	i;
 
 	i = ft_strlen(s1) - 1;
-	while (s1[i] != '\0')
+	while (i > 0)
 	{
 		if (ft_strchr(set, s1[i]) == NULL)
 			return (i);
