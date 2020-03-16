@@ -5,90 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/10 09:56:50 by rtavares          #+#    #+#             */
-/*   Updated: 2020/03/10 18:47:29 by rtavares         ###   ########.fr       */
+/*   Created: 2020/03/16 10:46:24 by rtavares          #+#    #+#             */
+/*   Updated: 2020/03/16 14:58:41 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
-static int		ft_countstr(char const *s1, char c)
+// Conta a quantidade de linhas para alocação //
+
+static int		count_c(char const *s, char c)
 {
-	int l;
-	int i;
+	unsigned int	len;
+	unsigned int	i;
 
-	l = 0;
 	i = 0;
-	while (s1[i] == c)
-		i++;
-	while (s1[i] != '\0')
+	len = 0;
+	if (s[0] != c)
+		len++;
+	if ( s[ft_strlen(s) - 1] == c)
+		len--;
+	while (s[i] != '\0')
 	{
-		if (s1[i] == c)
+		while (s[i] != '\0' && s[i] == c)
 		{
-			if (s1[i + 1] != c && s1[i + 1] != '\0')
-				l++;
+			i++;
+			len++;
+			if (s[i] == c)
+				len--;
 		}
 		i++;
 	}
-	return(l + 1);
+	return (len);
 }
 
-static int		ft_cn(char const *s, char c, int k)
-{
-	int	cn;
+// Conta a quantidade de colunas para alocação //
 
-	cn = 0;
-	while (s[k] != '\0' && s[k] != c)
+static unsigned int count_str(char const *s, char c, unsigned int i)
+{
+	unsigned int	len;
+
+	len = 0;
+	
+	if (s[i] != '\0')
 	{
-		k++;
-		cn++;
+		while (s[i] == c && s[i] != '\0')
+			i++;
+		while (s[i] != c && s[i] != '\0')
+		{
+			len++;
+			i++;
+		}
+		return (len);
 	}
-	return (cn);
+	return(0);
 }
 
-static char		**ft_locline(char **str, char const *s, char c, int l)
-{
-	int		j;
-	int		k;
-	int		i;
+// efetua a copia das strings em cada linha //
 
-	j = 0;
-	k = 0;
+static char			**break_line(char const *s, char c, char **str, unsigned int l_line)
+{
+	unsigned int	ln;
+	unsigned int	cl;
+	unsigned int	i;
+
+	ln = 0;
 	i = 0;
-	while (s[k] != '\0' && l > 0)
+	while (s[i] != '\0' && l_line > ln)
 	{
-		str[j] = malloc(sizeof(char) * (ft_cn(s, c, k) + 1));
-		while (s[k] != c)
-			str[j][i++] = s[k++];
-		str[j][i] = '\0';
-		j++;
-		k++;
-		i = 0;
-		l--;
+		cl = 0;
+		if(!(str[ln] = malloc(sizeof(char) * count_str(s, c, i) + 1)))
+			return (NULL);
+		while (s[i] == c && s[i] != '\0')
+			i++;
+		while (s[i] != c && s[i] != '\0')
+			str[ln][cl++] = s[i++];
+		str[ln][cl] = '\0';
+		ln++;
 	}
-	str[j] = 0;
-	puts(str[0]);
+	str[ln] = 0;
 	return (str);
 }
 
-char	**ft_split(char const *s, char c)
+char         	   **ft_split(char const *s, char c)
 {
-	char	**str;
-	int		l;
-
-	l = 0;
-	l = (ft_countstr(s, c) + 1);
-	str = malloc(sizeof(char *) * l);
-	return (ft_locline(str, s, c, (l - 1)));
-}
-
-
-
-
-int main ()
-{
-	char	**imp;
-
-	imp = ft_split("     fd dddfdfdf fd", ' ');
-	return(0);
+	char			**str;
+	unsigned int	len;
+	
+	if (!s)
+		return (NULL);
+	len = count_c(s, c);
+	if (!(str = malloc(sizeof(char *) * len + 1)))
+		return (NULL);
+	return (break_line(s, c, str, len));
 }
