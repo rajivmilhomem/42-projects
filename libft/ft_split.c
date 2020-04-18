@@ -6,96 +6,94 @@
 /*   By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 10:46:24 by rtavares          #+#    #+#             */
-/*   Updated: 2020/03/16 14:58:41 by rtavares         ###   ########.fr       */
+/*   Updated: 2020/04/17 12:33:54 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// Conta a quantidade de linhas para alocação //
-
-static int		count_c(char const *s, char c)
+static int		cnt_string(char const *s1, char c)
 {
-	unsigned int	len;
-	unsigned int	i;
+	int	tam;
+	int	k;
 
-	i = 0;
-	len = 0;
-	if (s[0] != c)
-		len++;
-	if ( s[ft_strlen(s) - 1] == c)
-		len--;
-	while (s[i] != '\0')
+	tam = 0;
+	k = 0;
+	if (*s1 == '\0')
+		return (0);
+	while (*s1 != '\0')
 	{
-		while (s[i] != '\0' && s[i] == c)
+		if (*s1 == c)
+			k = 0;
+		else if (k == 0)
 		{
-			i++;
-			len++;
-			if (s[i] == c)
-				len--;
+			k = 1;
+			tam++;
 		}
+		s1++;
+	}
+	return (tam);
+}
+
+static int		n_char(char const *s2, char c, int i)
+{
+	int	len;
+
+	len = 0;
+	while (s2[i] != c && s2[i] != '\0')
+	{
+		len++;
 		i++;
 	}
 	return (len);
 }
 
-// Conta a quantidade de colunas para alocação //
-
-static unsigned int count_str(char const *s, char c, unsigned int i)
+static char		**desloc(char const **dst, int j)
 {
-	unsigned int	len;
-
-	len = 0;
-	
-	if (s[i] != '\0')
+	while (j > 0)
 	{
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		while (s[i] != c && s[i] != '\0')
-		{
-			len++;
-			i++;
-		}
-		return (len);
+		j--;
+		free((void *)dst[j]);
 	}
-	return(0);
+	free(dst);
+	return (NULL);
 }
 
-// efetua a copia das strings em cada linha //
-
-static char			**break_line(char const *s, char c, char **str, unsigned int l_line)
+static char		**exec(char const *s, char **dst, char c, int l)
 {
-	unsigned int	ln;
-	unsigned int	cl;
-	unsigned int	i;
+	int	in;
+	int	j;
+	int	k;
 
-	ln = 0;
-	i = 0;
-	while (s[i] != '\0' && l_line > ln)
+	in = 0;
+	j = 0;
+	while (s[in] != '\0' && j < l)
 	{
-		cl = 0;
-		if(!(str[ln] = malloc(sizeof(char) * count_str(s, c, i) + 1)))
-			return (NULL);
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		while (s[i] != c && s[i] != '\0')
-			str[ln][cl++] = s[i++];
-		str[ln][cl] = '\0';
-		ln++;
+		k = 0;
+		while (s[in] == c)
+			in++;
+		dst[j] = (char *)malloc(sizeof(char) * n_char(s, c, in) + 1);
+		if (dst[j] == NULL)
+			return (desloc((char const **)dst, j));
+		while (s[in] != '\0' && s[in] != c)
+			dst[j][k++] = s[in++];
+		dst[j][k] = '\0';
+		j++;
 	}
-	str[ln] = 0;
-	return (str);
+	dst[j] = 0;
+	return (dst);
 }
 
-char         	   **ft_split(char const *s, char c)
+char			**ft_split(char const *s, char c)
 {
-	char			**str;
-	unsigned int	len;
-	
-	if (!s)
+	char	**dst;
+	int		len;
+
+	if (s == NULL)
 		return (NULL);
-	len = count_c(s, c);
-	if (!(str = malloc(sizeof(char *) * len + 1)))
+	len = cnt_string(s, c);
+	dst = (char **)malloc(sizeof(char *) * (len + 1));
+	if (dst == NULL)
 		return (NULL);
-	return (break_line(s, c, str, len));
+	return (exec(s, dst, c, len));
 }
