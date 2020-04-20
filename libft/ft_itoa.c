@@ -6,59 +6,37 @@
 /*   By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 20:42:48 by rtavares          #+#    #+#             */
-/*   Updated: 2020/03/14 18:01:55 by rtavares         ###   ########.fr       */
+/*   Updated: 2020/04/20 16:01:32 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		*ft_aux(int n, char *str, int len, int sig)
+char	*ft_itoa(int n)
 {
-	while (--len >= 0)
+	char	*str;
+	long	nb;
+	size_t	sz;
+
+	nb = n;
+	sz = n > 0 ? 0 : 1;
+	nb = nb > 0 ? nb : -nb;
+	while (n)
 	{
-		str[len] = (n % 10) + '0';
 		n /= 10;
+		sz++;
 	}
-	if (sig == 1)
-		str[0] = '-';
-	return (str);
-}
-
-static char		*ft_test(int n)
-{
-	if (n == -0 || n == 0 || n > 2147483647 || n < -2147483648)
-		return (ft_strdup("0"));
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	if (n == 2147483647)
-		return (ft_strdup("2147483647"));
-	else
-		return (NULL);
-}
-
-char			*ft_itoa(int n)
-{
-	int			sig;
-	int			num;
-	int			len;
-	char		*str;
-
-	len = 1;
-	sig = 0;
-	if (ft_test(n) != NULL)
-		return (ft_test(n));
-	if (n < 0)
+	if (!(str = (char *)malloc(sz + 1)))
+		return (0);
+	*(str + sz--) = '\0';
+	while (nb > 0)
 	{
-		n *= -1;
-		sig = 1;
+		*(str + sz--) = nb % 10 + '0';
+		nb /= 10;
 	}
-	num = n;
-	while (num /= 10)
-		len++;
-	len += sig;
-	if (!(str = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	str[len] = '\0';
-	ft_aux(n, str, len, sig);
+	if (sz == 0 && str[1] == '\0')
+		*(str + sz) = '0';
+	else if (sz == 0 && str[1] != '\0')
+		*(str + sz) = '-';
 	return (str);
 }

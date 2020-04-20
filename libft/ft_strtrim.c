@@ -6,52 +6,24 @@
 /*   By: rtavares <rtavares@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 12:14:26 by rtavares          #+#    #+#             */
-/*   Updated: 2020/03/01 17:50:11 by rtavares         ###   ########.fr       */
+/*   Updated: 2020/04/20 16:02:18 by rtavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	start(char const *s1, char const *set)
+#include "libft.h"
+
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	i;
-
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		if (ft_strchr(set, s1[i]) == NULL)
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-static size_t	final(char const *s1, char const *set)
-{
-	size_t	i;
-
-	i = ft_strlen(s1) - 1;
-	while (i > 0)
-	{
-		if (ft_strchr(set, s1[i]) == NULL)
-			return (i);
-		i--;
-	}
-	return (i + 1);
-}
-
-char			*ft_strtrim(char const *s1, char const *set)
-{
-	size_t	ini;
-	size_t	end;
-	char	*new;
 
 	if (!s1 || !set)
-		return (NULL);
-	ini = start(s1, set);
-	end = final(s1, set);
-	if ((ini + end) == ft_strlen(s1))
-		return (ft_strdup(""));
-	new = ft_substr(s1, ini, (((end + 1) - ini)));
-	return (new);
+		return (0);
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	i = ft_strlen(s1);
+	while (i && ft_strchr(set, s1[i]))
+		i--;
+	return (ft_substr(s1, 0, i + 1));
 }
